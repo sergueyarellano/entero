@@ -1,0 +1,22 @@
+{
+  "name": "entero",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sergueyarellano/entero.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/sergueyarellano/entero/issues"
+  },
+  "homepage": "https://github.com/sergueyarellano/entero#readme",
+  "devDependencies": {
+    "standard": "^14.3.3"
+  }
+}
