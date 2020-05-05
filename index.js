@@ -1,13 +1,16 @@
 const readline = require('readline')
 const stream = require('stream')
+const { getCompleter } = require('./utils')
 
 module.exports = entero
 
-function entero ({ prompt = '>', onLine = line => console.log(line) }) {
+function entero ({ prompt = '>', onLine = line => console.log(line), commands = {} }) {
+  const completions = Object.keys(commands).map(command => '/' + command)
   const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout,
-    prompt
+    prompt,
+    completer: commands ? getCompleter(completions) : line => [[], line]
   })
 
   hijackConsole(rl)
@@ -15,7 +18,15 @@ function entero ({ prompt = '>', onLine = line => console.log(line) }) {
   rl.on('line', function (line) {
     const removePreviousLineHex = '\x1b[1A\x1b[K'
     process.stdout.write(removePreviousLineHex)
-    onLine(line)
+    if (line.startsWith('/')) {
+      const words = line.match(/[^\s/]+/g)
+      const type = words[0]
+      const options = words.slice(1)
+      const command = commands[type]
+      typeof command === 'function' && command(...options)
+    } else {
+      line.length > 0 && onLine(line)
+    }
     rl.prompt()
   })
 }
@@ -68,10 +79,6 @@ function prependToPrompt (chunk, rl) {
 
   return Buffer.from(`\n\x1b[1A\r\x1b[K${chunk.toString()}`, 'utf8')
 }
-
-// Testing
-let count = 0
-setInterval(() => { console.log('count increased:', count++) }, 1000)
 
 /*
 Position the Cursor: \x1b[<L>;<C>H or \x1b[<L>;<C>f (puts the cursor at line L and column C)

@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "tape test/**/*.test.js | tap-nirvana",
+    "watch:test": "nodemon --exec \"npm run test\""
   },
   "repository": {
     "type": "git",
@@ -17,6 +18,9 @@
   },
   "homepage": "https://github.com/sergueyarellano/entero#readme",
   "devDependencies": {
-    "standard": "^14.3.3"
+    "nodemon": "^2.0.3",
+    "standard": "^14.3.3",
+    "tap-nirvana": "^1.1.0",
+    "tape": "^5.0.0"
   }
 }
