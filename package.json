@@ -17,6 +17,12 @@
     "url": "https://github.com/sergueyarellano/entero/issues"
   },
   "homepage": "https://github.com/sergueyarellano/entero#readme",
+  "keywords": [
+    "chat",
+    "terminal",
+    "cli",
+    "readline"
+  ],
   "devDependencies": {
     "nodemon": "^2.0.3",
     "standard": "^14.3.3",

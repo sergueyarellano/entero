@@ -4,7 +4,7 @@ const { getCompleter } = require('./utils')
 
 module.exports = entero
 
-function entero ({ prompt = '>', onLine = line => console.log(line), commands = {} }) {
+function entero ({ prompt = '>', onLine = line => console.log(line), commands = {}, templates = {} }) {
   const completions = Object.keys(commands).map(command => '/' + command)
   const rl = readline.createInterface({
     input: process.stdin,
@@ -29,6 +29,14 @@ function entero ({ prompt = '>', onLine = line => console.log(line), commands = 
     }
     rl.prompt()
   })
+  return {
+    log: (templateName, payload) => {
+      const defaultTemplate = () => `Did not find a template with the name "${templateName}"`
+      const template = templates[templateName] || defaultTemplate
+      const text = template(payload)
+      console.log(text)
+    }
+  }
 }
 
 function hijackConsole (rl) {
@@ -43,7 +51,7 @@ function hijackConsole (rl) {
       process.stdout.write(prependToPrompt(chunk, rl), _, () => {
         /*
         https://github.com/nodejs/node/blob/efec6811b667b6cf362d648bc599b667eebffce0/lib/readline.js#L376
-        next one is hack, it saves current prompt and content, forces the terminal
+        next one is a hack, it saves current prompt and content, forces the terminal
         to allocate a new line, and then writes the saved line. It seems to be tightly coupled to readline,
         We use it here because it comes in handy instead of having to reinvent the wheel
         */
@@ -79,20 +87,3 @@ function prependToPrompt (chunk, rl) {
 
   return Buffer.from(`\n\x1b[1A\r\x1b[K${chunk.toString()}`, 'utf8')
 }
-
-/*
-Position the Cursor: \x1b[<L>;<C>H or \x1b[<L>;<C>f (puts the cursor at line L and column C)
-Move the cursor up N lines: \x1b[<N>A
-Move the cursor down N lines: \x1b[<N>B
-Move the cursor forward N columns: \x1b[<N>C
-Move the cursor backward N columns: \x1b[<N>D
-Clear the screen, move to (0,0): \x1b[2J
-Erase to end of line: \x1b[K
-Save cursor position: \x1b[s
-Restore cursor position: \x1b[u
-
-  opts:
-
-  prefix: function or string
-  rewritePrevious: true // if false,
-*/
