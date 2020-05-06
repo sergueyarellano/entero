@@ -35,7 +35,8 @@ function entero ({ prompt = '>', onLine = line => console.log(line), commands = 
       const template = templates[templateName] || defaultTemplate
       const text = template(payload)
       console.log(text)
-    }
+    },
+    rl
   }
 }
 
