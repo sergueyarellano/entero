@@ -3,6 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "files": [
+    "index.js",
+    "utils.js"
+  ],
   "scripts": {
     "test": "tape test/**/*.test.js | tap-nirvana",
     "watch:test": "nodemon --exec \"npm run test\""

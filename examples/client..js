@@ -1,4 +1,4 @@
-const entero = require('.')
+const entero = require('..')
 
 const cli = entero({
   prompt: '> ',
