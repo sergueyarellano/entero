@@ -29,6 +29,7 @@ function entero ({ prompt = '>', onLine = line => console.log(line), commands = 
     }
     rl.prompt()
   })
+
   return {
     log: (templateName, payload) => {
       const defaultTemplate = () => `Did not find a template with the name "${templateName}"`
@@ -69,6 +70,10 @@ function hijackConsole (rl) {
 }
 
 function prependToPrompt (chunk, rl) {
+  const line = chunk.toString()
+  // If line is longer than the width of the terminal x times we have to go up x times
+  const offset = Math.ceil(line.length / process.stdout.columns)
+
   /*
     the idea is logging whatever that comes from the use of console.log,
     but in a way that we always put the current prompt at the end
@@ -86,5 +91,5 @@ function prependToPrompt (chunk, rl) {
     \x1b[K or \x1b[0J - will erase the line
   */
 
-  return Buffer.from(`\n\x1b[1A\r\x1b[K${chunk.toString()}`, 'utf8')
+  return Buffer.from(`\n\x1b[${offset}A\r\x1b[K${line}`, 'utf8')
 }

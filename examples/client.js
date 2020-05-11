@@ -20,5 +20,5 @@ cli.log('highlightnick', { nickname: 'max estrella' })
 cli.log('encrypt', { msg: 'secrets!' })
 
 // Testing
-let count = 0
-setInterval(() => { console.log('count increased:', count++) }, 1000)
+// let count = 0
+// setInterval(() => { console.log('count increased:', count++) }, 1000)
