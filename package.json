@@ -1,7 +1,7 @@
 {
   "name": "entero",
-  "version": "1.1.0",
-  "description": "",
+  "version": "1.1.1",
+  "description": "tiny cli that leaves prompt at the bottom",
   "main": "index.js",
   "files": [
     "index.js",
