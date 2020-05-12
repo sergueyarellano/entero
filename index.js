@@ -6,11 +6,13 @@ module.exports = entero
 
 function entero ({ prompt = '>', onLine = line => console.log(line), commands = {}, templates = {} }) {
   const completions = Object.keys(commands).map(command => '/' + command)
+  const extraCompletions = []
+  const getCompletions = () => completions.concat(extraCompletions)
   const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout,
     prompt,
-    completer: commands ? getCompleter(completions) : line => [[], line]
+    completer: commands ? getCompleter(getCompletions) : line => [[], line]
   })
 
   hijackConsole(rl)
@@ -37,6 +39,7 @@ function entero ({ prompt = '>', onLine = line => console.log(line), commands = 
       const text = template(payload)
       console.log(text)
     },
+    setCompletion: (...completions) => extraCompletions.push(...completions),
     rl
   }
 }

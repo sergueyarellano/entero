@@ -16,6 +16,8 @@ const cli = entero({
   }
 })
 
+cli.setCompletion('@alaa')
+cli.setCompletion('@baba')
 cli.log('highlightnick', { nickname: 'max estrella' })
 cli.log('encrypt', { msg: 'secrets!' })
 

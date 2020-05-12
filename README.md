@@ -18,6 +18,7 @@ entero({
   }
 })
 
+
 // Testing
 let count = 0
 setInterval(() => { console.log('count increased:', count++) }, 1000)
@@ -43,7 +44,17 @@ const cli = entero({
 
 cli.log('highlightnick', { nickname: 'max estrella' }) //  max estrella  **cyan**
 cli.log('encrypt', { msg: 'secrets!' }) // 115*101*99*114*101*116*115*33
+
 ```
 
 You can mix it with packages like `chalk`
 
+# Completions
+
+When passing commands, completions are set automatically, but more completions can be set up once instantiated. Pressing tab will trigger completions if a match occurs.
+
+```javascript
+cli.setCompletion('@home')
+cli.setCompletion('#tag')
+cli.setCompletion('.foo', '.bar')
+```
