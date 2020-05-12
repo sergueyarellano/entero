@@ -87,5 +87,13 @@ test('getCompleter', t => {
     t.deepEqual(actual, expected, 'completions with different syntax, "#" should return its hit')
     // this behaviour is to avoid showing the same command once is already completed
   }
+  {
+    const getCompletions = () => ['/help', '.help2', '#help3']
+    const line = 'hey buddy #h'
+    const actual = utils.getCompleter(getCompletions)(line)
+    const expected = [['hey buddy #help3'], line]
+    t.deepEqual(actual, expected, 'completions with different syntax, "#" not at the beggining should return its hit with line replace at the end')
+    // this behaviour is to avoid showing the same command once is already completed
+  }
   t.end()
 })
