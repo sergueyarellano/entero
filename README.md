@@ -56,5 +56,5 @@ When passing commands, completions are set automatically, but more completions c
 ```javascript
 cli.setCompletion('@home')
 cli.setCompletion('#tag')
-cli.setCompletion('.foo', '.bar')
+cli.setCompletion('.foo')
 ```

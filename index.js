@@ -6,8 +6,8 @@ module.exports = entero
 
 function entero ({ prompt = '>', onLine = line => console.log(line), commands = {}, templates = {} }) {
   const completions = Object.keys(commands).map(command => '/' + command)
-  const extraCompletions = []
-  const getCompletions = () => completions.concat(extraCompletions)
+  const extraCompletions = {}
+  const getCompletions = () => completions.concat(Object.keys(extraCompletions))
   const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout,
@@ -39,7 +39,7 @@ function entero ({ prompt = '>', onLine = line => console.log(line), commands = 
       const text = template(payload)
       console.log(text)
     },
-    setCompletion: (...completions) => extraCompletions.push(...completions),
+    setCompletion: (completion) => { extraCompletions[completion] = null },
     rl
   }
 }
