@@ -74,8 +74,9 @@ function hijackConsole (rl) {
 
 function prependToPrompt (chunk, rl) {
   const line = chunk.toString()
+
   // If line is longer than the width of the terminal x times we have to go up x times
-  const offset = Math.ceil(line.length / process.stdout.columns)
+  const offset = line.split(/\n/).length > 2 ? 1 : Math.ceil(line.length / process.stdout.columns)
 
   /*
     the idea is logging whatever that comes from the use of console.log,
