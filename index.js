@@ -75,9 +75,6 @@ function hijackConsole (rl) {
 function prependToPrompt (chunk, rl) {
   const line = chunk.toString()
 
-  // If line is longer than the width of the terminal x times we have to go up x times
-  const offset = line.split(/\n/).length > 2 ? 1 : Math.ceil(line.length / process.stdout.columns)
-
   /*
     the idea is logging whatever that comes from the use of console.log,
     but in a way that we always put the current prompt at the end
@@ -95,5 +92,5 @@ function prependToPrompt (chunk, rl) {
     \x1b[K or \x1b[0J - will erase the line
   */
 
-  return Buffer.from(`\n\x1b[${offset}A\r\x1b[K${line}`, 'utf8')
+  return Buffer.from(`\n\r\x1b[1A\x1b[K${line}`, 'utf8')
 }
